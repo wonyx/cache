@@ -64984,9 +64984,11 @@ const utils = __importStar(__nccwpck_require__(8270));
 // throw an uncaught exception.  Instead of failing this action, just warn.
 process.on("uncaughtException", e => utils.logWarning(e.message));
 function saveImpl(stateProvider) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         let cacheId = -1;
         try {
+            core.info((_a = process.env['ACTIONS_RESULTS_URL']) !== null && _a !== void 0 ? _a : "");
             if (!utils.isCacheFeatureAvailable()) {
                 return;
             }
