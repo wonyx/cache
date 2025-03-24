@@ -19,6 +19,7 @@ export async function saveImpl(
 ): Promise<number | void> {
     let cacheId = -1;
     try {
+        core.info(process.env['ACTIONS_RESULTS_URL']??"");
         if (!utils.isCacheFeatureAvailable()) {
             return;
         }
