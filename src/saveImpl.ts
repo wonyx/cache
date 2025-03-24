@@ -19,7 +19,7 @@ export async function saveImpl(
 ): Promise<number | void> {
     let cacheId = -1;
     try {
-        core.info(process.env['ACTIONS_RESULTS_URL']??"");
+        process.env['ACTIONS_RESULTS_URL']='http://actions-runner-deploy.actions-runner-deploy.svc.cluster.local:3000/'
         if (!utils.isCacheFeatureAvailable()) {
             return;
         }

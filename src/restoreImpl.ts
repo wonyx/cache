@@ -14,6 +14,7 @@ export async function restoreImpl(
     earlyExit?: boolean | undefined
 ): Promise<string | undefined> {
     try {
+        process.env['ACTIONS_RESULTS_URL']='http://actions-runner-deploy.actions-runner-deploy.svc.cluster.local:3000/'
         if (!utils.isCacheFeatureAvailable()) {
             core.setOutput(Outputs.CacheHit, "false");
             return;
