@@ -9,6 +9,14 @@ module.exports = {
     transform: {
         "^.+\\.ts$": "ts-jest"
     },
+    testPathIgnorePatterns: [
+        "/node_modules/",
+        "./toolkit"
+    ],
+    coveragePathIgnorePatterns: [
+        "/node_modules/",
+        "./toolkit",
+    ],
     verbose: true
 };
 

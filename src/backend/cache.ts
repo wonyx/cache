@@ -1,50 +1,6 @@
-// @ts-nocheck
-import * as core from '@actions/core'
-import * as path from 'path'
-import * as utils from './internal/cacheUtils'
+import * as cache from '@actions/cache'
 
-import { getCacheServiceVersion, isGhes } from './internal/config'
 import { DownloadOptions, UploadOptions } from './options'
-import { createTar, extractTar, listTar } from './internal/tar'
-
-import { CacheFileSizeLimit } from './internal/constants'
-export class ValidationError extends Error {
-  constructor(message: string) {
-    super(message)
-    this.name = 'ValidationError'
-    Object.setPrototypeOf(this, ValidationError.prototype)
-  }
-}
-
-export class ReserveCacheError extends Error {
-  constructor(message: string) {
-    super(message)
-    this.name = 'ReserveCacheError'
-    Object.setPrototypeOf(this, ReserveCacheError.prototype)
-  }
-}
-
-function checkPaths(paths: string[]): void {
-  if (!paths || paths.length === 0) {
-    throw new ValidationError(
-      `Path Validation Error: At least one directory or file path is required`
-    )
-  }
-}
-
-function checkKey(key: string): void {
-  if (key.length > 512) {
-    throw new ValidationError(
-      `Key Validation Error: ${key} cannot be larger than 512 characters.`
-    )
-  }
-  const regex = /^[^,]*$/
-  if (!regex.test(key)) {
-    throw new ValidationError(
-      `Key Validation Error: ${key} cannot contain commas.`
-    )
-  }
-}
 
 /**
  * isFeatureAvailable to check the presence of Actions cache service
@@ -72,12 +28,9 @@ export async function restoreCache(
   options?: DownloadOptions,
   enableCrossOsArchive = false
 ): Promise<string | undefined> {
-  const cacheServiceVersion: string = getCacheServiceVersion()
-  core.debug(`Cache service version: ${cacheServiceVersion}`)
+  
 
-  checkPaths(paths)
-
-  return
+  return cache.restoreCache(paths, primaryKey, restoreKeys, options, enableCrossOsArchive)
 }
 
 /**
@@ -95,9 +48,5 @@ export async function saveCache(
   options?: UploadOptions,
   enableCrossOsArchive = false
 ): Promise<number> {
-  const cacheServiceVersion: string = getCacheServiceVersion()
-  core.debug(`Cache service version: ${cacheServiceVersion}`)
-  checkPaths(paths)
-  checkKey(key)
-  return 0
+    return cache.saveCache(paths, key, options, enableCrossOsArchive)
 }
