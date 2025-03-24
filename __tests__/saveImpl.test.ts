@@ -1,5 +1,5 @@
-import * as cache from "@actions/cache";
 import * as core from "@actions/core";
+import * as cache from "../src/backend/cache";
 
 import { Events, Inputs, RefKey } from "../src/constants";
 import { saveImpl } from "../src/saveImpl";
@@ -8,7 +8,7 @@ import * as actionUtils from "../src/utils/actionUtils";
 import * as testUtils from "../src/utils/testUtils";
 
 jest.mock("@actions/core");
-jest.mock("@actions/cache");
+jest.mock("../src/backend/cache");
 jest.mock("../src/utils/actionUtils");
 
 beforeAll(() => {
@@ -299,7 +299,7 @@ test("save with reserve cache failure outputs warning", async () => {
     const saveCacheMock = jest
         .spyOn(cache, "saveCache")
         .mockImplementationOnce(() => {
-            const actualCache = jest.requireActual("@actions/cache");
+            const actualCache = jest.requireActual("../src/backend/cache");
             const error = new actualCache.ReserveCacheError(
                 `Unable to reserve cache with key ${primaryKey}, another job may be creating this cache.`
             );
