@@ -2,13 +2,29 @@ import * as cache from '@actions/cache'
 
 import { DownloadOptions, UploadOptions } from './options'
 
+export class ValidationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ValidationError'
+    Object.setPrototypeOf(this, ValidationError.prototype)
+  }
+}
+
+export class ReserveCacheError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ReserveCacheError'
+    Object.setPrototypeOf(this, ReserveCacheError.prototype)
+  }
+}
+
 /**
  * isFeatureAvailable to check the presence of Actions cache service
  *
  * @returns boolean return true if Actions cache service feature is available, otherwise false
  */
 export function isFeatureAvailable(): boolean {
-  return true
+  return !!process.env['ACTIONS_CACHE_URL']
 }
 
 /**
