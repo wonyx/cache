@@ -196,10 +196,3 @@ export function getDownloadOptions(copy?: DownloadOptions): DownloadOptions {
 
   return result
 }
-
-export interface UploadOptions {
-  driver?: 'fs' | 's3'
-}
-export interface DownloadOptions {
-  driver?: 'fs' | 's3'
-}

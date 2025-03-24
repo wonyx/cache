@@ -32,7 +32,7 @@ export function getCacheServiceURL(): string {
         ''
       )
     case 'v2':
-      return process.env['ACTIONS_RESULTS_URL'] || ''
+      return process.env['CUSTOM_ACTIONS_RESULTS_URL'] || process.env['ACTIONS_RESULTS_URL'] || ''
     default:
       throw new Error(`Unsupported cache service version: ${version}`)
   }
